@@ -1,0 +1,10 @@
+./bin
+./src
+./dist
+./node_modules
+./vendor
+./package*
+./webpack*
+./.*
+svgo.config*
+**.code-workspace*
