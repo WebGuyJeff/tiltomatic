@@ -60,7 +60,7 @@ class Settings {
 			$this->admin_label . ' Settings',        // page_title
 			$this->admin_label,                      // menu_title
 			'manage_options',                        // capability
-			$this->page_slug,                        // menu_slug
+			self::PAGESLUG,                          // menu_slug
 			array( &$this, 'create_settings_page' ), // function
 			null,                                    // position
 		);
@@ -73,8 +73,8 @@ class Settings {
 	 */
 	public function echo_plugin_settings_link() {
 		?>
-		<a href="/wp-admin/admin.php?page=<?php echo $this->page_slug; ?>">
-			<?php echo $this->admin_label; ?> settings
+		<a href="/wp-admin/admin.php?page=<?php echo esc_attr( self::PAGESLUG ); ?>">
+			<?php echo esc_html( $this->admin_label ); ?> settings
 		</a>
 		<?php
 	}
@@ -88,7 +88,7 @@ class Settings {
 		/* Get the active tab from the $_GET URL param. */
 		$default_tab = null;
 		$tab         = isset( $_GET['tab'] ) ? $_GET['tab'] : $default_tab;
-		$slug        = $this->page_slug;
+		$slug        = self::PAGESLUG;
 		?>
 
 		<div class="wrap">
@@ -105,24 +105,24 @@ class Settings {
 
 			<nav class="nav-tab-wrapper">
 				<a
-					href="?page=<?php echo $slug; ?>"
+					href="?page=<?php echo esc_attr( $slug ); ?>"
 					class="nav-tab 
 					<?php
 					if ( $tab === null ) :
 						?>
 						nav-tab-active<?php endif; ?>"
 				>
-					Default Tab
+					<?php echo esc_html( __( 'Info', 'bigup-tiltomatic' ) ); ?>
 				</a>
 				<a
-					href="?page=<?php echo $slug; ?>&tab=tab-2"
+					href="?page=<?php echo esc_attr( $slug ); ?>&tab=tab-2"
 					class="nav-tab 
 					<?php
 					if ( $tab === 'tab-2' ) :
 						?>
 						nav-tab-active<?php endif; ?>"
 				>
-					Tab 2
+					<?php echo esc_html( __( 'Developer', 'bigup-tiltomatic' ) ); ?>
 				</a>
 			</nav>
 

@@ -78,12 +78,16 @@ class Settings_Tab_Two {
 	}
 
 
-	public function sanitise( $input ) {
-
+	/**
+	 * Sanitise all settings callback.
+	 *
+	 * @param string $settings Serialised array of settings.
+	 */
+	public function sanitise( $settings ) {
 		$sanitised = array();
 
-		if ( isset( $input['debug'] ) ) {
-			$sanitised['debug'] = $this->sanitise_checkbox( $input['debug'] );
+		if ( isset( $settings['debug'] ) ) {
+			$sanitised['debug'] = $this->sanitise_checkbox( $settings['debug'] );
 		}
 
 		return $sanitised;
@@ -92,6 +96,8 @@ class Settings_Tab_Two {
 
 	/**
 	 * Sanitise a checkbox.
+	 *
+	 * @param bool $checkbox Value from a checkbox input.
 	 */
 	private function sanitise_checkbox( $checkbox ) {
 		$bool_checkbox = (bool) $checkbox;

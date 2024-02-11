@@ -1,17 +1,14 @@
 {
 	"apiVersion": 2,
-	"name": "tiltomatic/social-links-gradient-fill",
+	"name": "tiltomatic/tilting-element",
 	"version": "0.0.1",
-	"title": "Social Links Gradient Fill",
-	"category": "widgets",
+	"title": "Animated tilting element",
+	"category": "design",
 	"icon": "thumbs-up",
-	"description": "Display social links with a gradient fill!",
-	"keywords": [ "social links", "social", "gradient" ],
+	"description": "Tilting animation which follows the mouse cursor",
+	"keywords": [ "tiltomatic", "tilting", "animation" ],
 	"textdomain": "tiltomatic",
-	"editorScript": "file:./social-links-gradient-fill.js",
-	"editorStyle": "file:./social-links-gradient-fill-editor.css",
-	"style": "file:./social-links-gradient-fill.css",
-	"allowedBlocks": [
-		"core/social-links"
-	]
+	"editorScript": "file:./tilting-element.js",
+	"editorStyle": "file:./tilting-element-editor.css",
+	"style": "file:./tilting-element.css"
 }

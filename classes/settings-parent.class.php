@@ -27,7 +27,7 @@ class Settings_Parent {
 	/**
 	 * Settings page slug to add with add_submenu_page().
 	 */
-	public static $page_slug = 'bigup-web';
+	public const PAGESLUG = 'bigup-web';
 
 
 	/**
@@ -45,7 +45,7 @@ class Settings_Parent {
 	public function register_admin_menu() {
 
 		// Add Bigup Web parent menu, if it doesn't exist.
-		$parent_menu = menu_page_url( self::$page_slug, false );
+		$parent_menu = menu_page_url( self::PAGESLUG, false );
 		if ( false === ! ! $parent_menu ) {
 			add_menu_page(
 				$this->admin_label . ' Settings', // page_title
@@ -93,5 +93,4 @@ class Settings_Parent {
 
 		<?php
 	}
-
 }

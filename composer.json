@@ -1,0 +1,20 @@
+{
+	"name": "bigupweb/tiltomatic",
+	"description": "Apply a cursor-following tilt animation to any element!",
+	"type": "project",
+	"require-dev": {
+        "squizlabs/php_codesniffer": "^3.0",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+		"wp-coding-standards/wpcs": "^3.0"
+    },
+	"scripts": {
+		"lint": "vendor/bin/phpcs -ps ./classes --standard=WordPress",
+		"lint-fix": "vendor/bin/phpcbf -ps ./classes --standard=WordPress",
+        "phpcompat": "./vendor/bin/phpcs -p . --standard=PHPCompatibilityWP --extensions=php --runtime-set testVersion 5.6-"
+    },
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
+}

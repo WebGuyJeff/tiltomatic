@@ -24,8 +24,6 @@ class Init {
 	 * Setup the plugin by registering all hooks.
 	 */
 	public function setup() {
-		add_action( 'admin_init', array( new Settings_Tab_One(), 'init' ), 10, 0 );
-		add_action( 'admin_init', array( new Settings_Tab_Two(), 'init' ), 10, 0 );
 		add_action( 'admin_menu', array( new Settings_Parent(), 'register_admin_menu' ), 1, 0 );
 		$Settings = new Settings();
 		add_action( 'admin_menu', array( &$Settings, 'register_admin_menu' ), 99, 0 );

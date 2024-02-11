@@ -1,17 +1,17 @@
 {
 	"apiVersion": 2,
-	"name": "tiltomatic/social-links-gradient-fill",
+	"name": "tiltomatic/tilting-elements-group",
 	"version": "0.0.1",
-	"title": "Social Links Gradient Fill",
-	"category": "widgets",
+	"title": "Animated tilting group",
+	"category": "design",
 	"icon": "thumbs-up",
-	"description": "Display social links with a gradient fill!",
-	"keywords": [ "social links", "social", "gradient" ],
+	"description": "Control the tilting animation for any child tilting elements with common settings",
+	"keywords": [ "tiltomatic", "tilting", "animation", "group" ],
 	"textdomain": "tiltomatic",
-	"editorScript": "file:./social-links-gradient-fill.js",
-	"editorStyle": "file:./social-links-gradient-fill-editor.css",
-	"style": "file:./social-links-gradient-fill.css",
+	"editorScript": "file:./tilting-elements-group.js",
+	"editorStyle": "file:./tilting-elements-group-editor.css",
+	"style": "file:./tilting-elements-group.css",
 	"allowedBlocks": [
-		"core/social-links"
+		"tiltomatic/tilting-element"
 	]
 }
