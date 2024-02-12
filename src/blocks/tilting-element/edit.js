@@ -3,8 +3,13 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor'
 import './tilting-element-editor.scss'
 
 export default function Edit() {
+
+	const blockProps = useBlockProps( {
+		className: 'tilt'
+	} )
+
 	return (
-		<div { ...useBlockProps() }>
+		<div { ...blockProps }>
 			<InnerBlocks />
 		</div>
 	)

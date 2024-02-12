@@ -55,6 +55,7 @@ class Blocks {
 			$result = register_block_type_from_metadata( $this->blocks_abs_path . $name );
 			if ( false === $result ) {
 				error_log( "ERROR: Block registration failed for '{$name}'" );
+
 			}
 		}
 	}

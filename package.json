@@ -5,7 +5,8 @@
 	"dependencies": {
 		"@wordpress/block-editor": "^12.10.0",
 		"@wordpress/blocks": "^12.19.0",
-		"@wordpress/i18n": "^4.42.0"
+		"@wordpress/i18n": "^4.42.0",
+		"gsap": "^3.12.5"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^26.16.0",

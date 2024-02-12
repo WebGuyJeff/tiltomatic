@@ -1,5 +1,6 @@
 {
-	"apiVersion": 2,
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
 	"name": "tiltomatic/tilting-elements-group",
 	"version": "0.0.1",
 	"title": "Animated tilting group",
@@ -10,8 +11,5 @@
 	"textdomain": "tiltomatic",
 	"editorScript": "file:./tilting-elements-group.js",
 	"editorStyle": "file:./tilting-elements-group-editor.css",
-	"style": "file:./tilting-elements-group.css",
-	"allowedBlocks": [
-		"tiltomatic/tilting-element"
-	]
+	"style": "file:./tilting-elements-group.css"
 }

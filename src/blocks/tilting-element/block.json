@@ -1,5 +1,6 @@
 {
-	"apiVersion": 2,
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
 	"name": "tiltomatic/tilting-element",
 	"version": "0.0.1",
 	"title": "Animated tilting element",
@@ -9,6 +10,7 @@
 	"keywords": [ "tiltomatic", "tilting", "animation" ],
 	"textdomain": "tiltomatic",
 	"editorScript": "file:./tilting-element.js",
+	"viewScript": "file:./tilting-element-view.js",
 	"editorStyle": "file:./tilting-element-editor.css",
 	"style": "file:./tilting-element.css"
 }
