@@ -12,17 +12,17 @@
 	"editorScript": "file:./tilting-elements-group.js",
 	"script": "file:./tilting-elements-group-view.js",
 	"attributes": {
-		"maxAngleX": {
-			"type": "number",
+		"tiltRangeX": {
+			"type": "string",
 			"default": 50,
 			"source": "attribute",
-			"selector": "data-tilt-max-x"
+			"selector": "data-tilt-range-x"
 		},
-		"maxAngleY": {
-			"type": "number",
+		"tiltRangeY": {
+			"type": "string",
 			"default": 50,
 			"source": "attribute",
-			"selector": "data-tilt-max-x"
+			"selector": "data-tilt-range-y"
 		},
 		"perspective": {
 			"type": "string",
@@ -36,19 +36,16 @@
 			"type": "boolean",
 			"default": true
 		},
-		"preventOverflow": {
-			"type": "boolean",
-			"default": false
-		},
-		"overflowSelector": {
+		"overflowMode": {
 			"type": "string",
-			"enum": [ "container", "body" ],
-			"default": "container"
+			"default": "disabled",
+			"source": "attribute",
+			"selector": "data-overflow-mode"
 		}
 	},
 	"providesContext": {
-		"tiltomatic/max-angle-x": "maxAngleX",
-		"tiltomatic/max-angle-y": "maxAngleY",
+		"tiltomatic/max-angle-x": "tiltRangeX",
+		"tiltomatic/max-angle-y": "tiltRangeY",
 		"tiltomatic/perspective": "perspective",
 		"tiltomatic/enabled": "enabled"
 	},

@@ -12,19 +12,10 @@ import { gsap } from "gsap"
 
 gsap.ticker.fps( 30 ) // Limit updates for smoother animation.
 
-const config = {
-	containerSelector: '.tilt_container',
-	childSelector:     '.tilt',
-	maxAngleX:         50,
-	maxAngleY:         50,
-	perspective:       '200px'
-}
-
-
-/**
- * Get tilt container ancestor.
- */
-const getContainer = ( child ) => child.closest( config.containerSelector ) || false
+const containerSelector = '.tilt_container',
+	  childSelector     = '.tilt',
+	  HTMLAttrRangeX    = 'data-tilt-range-x',
+	  HTMLAttrRangeY    = 'data-tilt-range-y'
 
 
 /**
@@ -79,19 +70,19 @@ const isInViewport = ( element ) => {
  * Get a timeline with new rotation of children.
  */
 const getRotationTimeline = async ( event, children ) => {
-	const container = getContainer( event.target )
-	const maxAngleX = container.getAttribute( 'data-tilt-max-x' )
-	const maxAngleY	= container.getAttribute( 'data-tilt-max-y' )
-	const x         = event.clientX - container.getBoundingClientRect().left
-	const y         = event.clientY - container.getBoundingClientRect().top
-	const tl        = gsap.timeline()
+	const container  = event.target.closest( containerSelector )
+	const tiltRangeX = container.getAttribute( HTMLAttrRangeX )
+	const tiltRangeY = container.getAttribute( HTMLAttrRangeY )
+	const x          = event.clientX - container.getBoundingClientRect().left
+	const y          = event.clientY - container.getBoundingClientRect().top
+	const tl         = gsap.timeline()
 	children.forEach( ( child ) => {
 		// Only add child to timeline if it's in view.
 		if ( isInViewport( child ) ) {
 			const fractionX = ( x - child._tilt.originX ) / container.offsetWidth
 			const fractionY = ( y - child._tilt.originY ) / container.offsetHeight
-			const rotX      = ( fractionY * -maxAngleY ).toFixed( 2 ) // Apply Y-angle to CSS X-axis.
-			const rotY      = ( fractionX * maxAngleX ).toFixed( 2 ) // Apply X-angle to CSS Y-axis.
+			const rotX      = ( fractionY * -tiltRangeY ).toFixed( 2 ) // Apply Y-angle to CSS X-axis.
+			const rotY      = ( fractionX * tiltRangeX ).toFixed( 2 ) // Apply X-angle to CSS Y-axis.
 			tl.to( child, { rotateX: rotX, rotateY: rotY, duration: 0.2 }, 0 )
 		}
 	} )
@@ -109,10 +100,10 @@ const updateOnMouseOver = async ( event, children ) => {
 
 const setupChildren = async () => {
 	const containers = []
-	document.querySelectorAll( config.childSelector ).forEach( ( child ) => {
+	document.querySelectorAll( childSelector ).forEach( ( child ) => {
 
 		// Bail if the child has no ancestor container as we don't want to animate it.
-		const container = getContainer( child )
+		const container = child.closest( containerSelector )
 		if ( ! container ) return
 		
 		// Add child to container prop.
@@ -151,15 +142,10 @@ const setupContainers = ( containers ) => {
 		const onMouseLeaveHandler = () => gsap.to( container._tiltChildren, { rotateX: 0, rotateY: 0, duration: 0.5, delay: 0.2 } )
 		container.addEventListener( 'mousemove', onMouseMoveHandler )
 		container.addEventListener( 'mouseleave', onMouseLeaveHandler )
-
-		// Set config to parent to allow for external configuration of these values.
-		container.setAttribute( 'data-tilt-max-x', config.maxAngleX )
-		container.setAttribute( 'data-tilt-max-y', config.maxAngleY )
-		container.style.perspective = config.perspective
 	} )
 }
 
-const setOrigins = () => document.querySelectorAll( config.childSelector ).forEach( ( child ) => child._tilt.setOrigin( child ) )
+const setOrigins = () => document.querySelectorAll( childSelector ).forEach( ( child ) => child._tilt.setOrigin( child ) )
 
 
 /**
@@ -167,7 +153,7 @@ const setOrigins = () => document.querySelectorAll( config.childSelector ).forEa
  */
 window.onload = async () => {
 	// Bail if there's nothing to animate.
-	if ( ! document.querySelector( config.childSelector ) ) return
+	if ( ! document.querySelector( childSelector ) ) return
 	const containers = await setupChildren()
 	setupContainers( containers )
 	window.onresize = () => debounce( setOrigins, 50 )

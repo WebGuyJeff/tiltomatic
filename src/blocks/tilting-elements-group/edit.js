@@ -6,32 +6,28 @@ import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-
 export default function Edit( { attributes, setAttributes } ) {
 
 	const {
-		maxAngleX,
-		maxAngleY,
+		tiltRangeX,
+		tiltRangeY,
 		perspective,
 		isolatedPerspective,
 		enabled,
-		preventOverflow,
-		overflowSelector
+		overflowMode
 	} = attributes
 
-	const containerSelector = '.tilt_container',
-		  childSelector     = '.tilt'
+	const containerClassName = 'tilt_container'
 
 	// Overflow target select control values.
-	const overflowSelectorOptions = [
-		{ value: containerSelector, label: "Tilt Container" },
-		{ value: 'body', label: "Document Body" }
+	const overflowModeSelectOptions = [
+		{ value: '.' + containerClassName, label: "Tilt Container" },
+		{ value: 'body', label: "Document Body" },
+		{ value: 'disabled', label: "Disabled" }
 	]
 
-	const styles = {
-		'perspective': perspective,
-		// ...{ ( preventOverflow && overflowSelector === containerSelector ) ? ( 'perspective': perspective ) : }
-	}
-
 	const blockProps = useBlockProps( {
-		className: 'tilt_container',
-		style: styles
+		className: containerClassName,
+		style: {
+			perspective: perspective
+		}
 	} )
 
 	return (
@@ -44,64 +40,60 @@ export default function Edit( { attributes, setAttributes } ) {
 				>
 					<RangeControl
 						initialPosition={ 50 }
-						label={ __( 'Maximum X-axis rotation', 'tiltomatic' ) }
-						value={ maxAngleX }
-						onChange={ ( newValue ) => { setAttributes( { maxAngleX: newValue, } ) } }
+						label={ __( 'X-axis range', 'tiltomatic' ) }
+						value={ parseInt( tiltRangeX ) }
+						onChange={ ( newValue ) => { setAttributes( { tiltRangeX: String( newValue ) } ) } }
 						max={ 90 }
 						min={ 0 }
-						help={ __( 'Set an X-axis angle limit for the animation.', 'tiltomatic' ) }
+						help={ __( 'Set the X-axis rotational range in degrees.', 'tiltomatic' ) }
 					/>
 					<RangeControl
 						initialPosition={ 50 }
-						label={ __( 'Maximum Y-axis rotation', 'tiltomatic' ) }
-						value={ maxAngleY }
-						onChange={ ( newValue ) => { setAttributes( { maxAngleY: newValue, } ) } }
+						label={ __( 'Y-axis range', 'tiltomatic' ) }
+						value={ parseInt( tiltRangeY ) }
+						onChange={ ( newValue ) => { setAttributes( { tiltRangeY: String( newValue ) } ) } }
 						max={ 90 }
 						min={ 0 }
-						help={ __( 'Set an Y-axis angle limit for the animation.', 'tiltomatic' ) }
+						help={ __( 'Set the Y-axis rotational range in degrees.', 'tiltomatic' ) }
 					/>
 					<RangeControl
 						initialPosition={ 200 }
-						label={ __( '3D perspective', 'tiltomatic' ) }
+						label={ __( '3D perspective distance', 'tiltomatic' ) }
 						value={ parseInt( perspective ) }
 						onChange={ ( newValue ) => { setAttributes( { perspective: newValue + 'px', } ) } }
 						max={ 1000 }
 						min={ 0 }
-						help={ __( 'Control the 3D perspective.', 'tiltomatic' ) }
+						help={ __( 'Distance to the perspective vanishing point in pixels. Smaller values result in more noticeable perspective and movement.', 'tiltomatic' ) }
 					/>
 					<CheckboxControl
 						label={ __( 'Isolated perspective', 'tiltomatic' ) }
 						checked={ isolatedPerspective }
-						onChange={ ( newValue ) => { setAttributes( { isolatedPerspective: newValue, } ) } }
-						help={ __( 'Wrap tilt elements in individual perspective containers.' ) }
+						onChange={ ( newValue ) => { setAttributes( { isolatedPerspective: newValue } ) } }
+						help={ __( 'Wrap tilt elements in individual perspective containers.', 'tiltomatic' ) }
 					/>
 					<CheckboxControl
 						label={ __( 'Animation enabled', 'tiltomatic' ) }
 						checked={ enabled }
-						onChange={ ( newValue ) => { setAttributes( { enabled: newValue, } ) } }
+						onChange={ ( newValue ) => { setAttributes( { enabled: newValue } ) } }
+						help={ __( 'Disable/enable the animation.', 'tiltomatic' ) }
 					/>
-					<CheckboxControl
-						label={ __( 'Prevent overflow', 'tiltomatic' ) }
-						checked={ preventOverflow }
-						onChange={ ( newValue ) => { setAttributes( { preventOverflow: newValue, } ) } }
+					<SelectControl
+						label={ __( 'Overflow mode', 'tiltomatic' ) }
+						labelPosition="top"
+						title="Hide-overflow mode"
+						value={ overflowMode }
+						options={ overflowModeSelectOptions }
+						onChange={ ( newValue ) => setAttributes( { overflowMode: newValue } ) }
+						help={ __( 'Select the container to hide any visual overflow outside of.', 'tiltomatic' ) }
 					/>
-					{ preventOverflow &&
-						<SelectControl
-							label={ __( 'Overflow selector', 'tiltomatic' ) }
-							labelPosition="top"
-							title="Overflow selector"
-							value={ overflowSelector }
-							options={ overflowSelectorOptions }
-							onChange={ ( newValue ) => setAttributes( { overflowSelector: newValue, } ) }
-						/>
-					}
 				</PanelBody>
 			</InspectorControls>
 
 			<div
 				{ ...blockProps }
-				data-tilt-max-x={ maxAngleX }
-				data-tilt-max-y={ maxAngleY }
+				data-tilt-range-x={ tiltRangeX }
+				data-tilt-range-y={ tiltRangeY }
+				data-overflow-mode={ overflowMode }
 			>
 				<InnerBlocks />
 			</div>
