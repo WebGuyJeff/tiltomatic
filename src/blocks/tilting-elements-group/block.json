@@ -6,10 +6,56 @@
 	"title": "Animated tilting group",
 	"category": "design",
 	"icon": "thumbs-up",
-	"description": "Control the tilting animation for any child tilting elements with common settings",
+	"description": "A container in which you can place and manage tilting elements with common settings.",
 	"keywords": [ "tiltomatic", "tilting", "animation", "group" ],
 	"textdomain": "tiltomatic",
 	"editorScript": "file:./tilting-elements-group.js",
-	"editorStyle": "file:./tilting-elements-group-editor.css",
-	"style": "file:./tilting-elements-group.css"
+	"script": "file:./tilting-elements-group-view.js",
+	"attributes": {
+		"maxAngleX": {
+			"type": "number",
+			"default": 50,
+			"source": "attribute",
+			"selector": "data-tilt-max-x"
+		},
+		"maxAngleY": {
+			"type": "number",
+			"default": 50,
+			"source": "attribute",
+			"selector": "data-tilt-max-x"
+		},
+		"perspective": {
+			"type": "string",
+			"default": "200px"
+		},
+		"isolatedPerspective": {
+			"type": "boolean",
+			"default": false
+		},
+		"enabled": {
+			"type": "boolean",
+			"default": true
+		},
+		"preventOverflow": {
+			"type": "boolean",
+			"default": false
+		},
+		"overflowSelector": {
+			"type": "string",
+			"enum": [ "container", "body" ],
+			"default": "container"
+		}
+	},
+	"providesContext": {
+		"tiltomatic/max-angle-x": "maxAngleX",
+		"tiltomatic/max-angle-y": "maxAngleY",
+		"tiltomatic/perspective": "perspective",
+		"tiltomatic/enabled": "enabled"
+	},
+	"supports": {
+		"html": false,
+		"layout": {
+			"allowInheriting": true
+		}
+	}
 }

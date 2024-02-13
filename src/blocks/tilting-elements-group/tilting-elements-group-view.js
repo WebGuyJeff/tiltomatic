@@ -55,6 +55,7 @@ const throttle = ( fn, wait, args = [] ) => {
 	fn( ...args )
 }
 
+
 /**
  * Test if an element has any portion within viewport.
  */

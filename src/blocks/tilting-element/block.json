@@ -10,7 +10,17 @@
 	"keywords": [ "tiltomatic", "tilting", "animation" ],
 	"textdomain": "tiltomatic",
 	"editorScript": "file:./tilting-element.js",
-	"viewScript": "file:./tilting-element-view.js",
-	"editorStyle": "file:./tilting-element-editor.css",
-	"style": "file:./tilting-element.css"
+	"ancestor": [ "tiltomatic/tilting-elements-group" ],
+	"usesContext": [
+		"tiltomatic/max-angle-x",
+		"tiltomatic/max-angle-y",
+		"tiltomatic/perspective",
+		"tiltomatic/enabled"
+	],
+	"supports": {
+		"html": false,
+		"layout": {
+			"allowInheriting": true
+		}
+	}
 }
