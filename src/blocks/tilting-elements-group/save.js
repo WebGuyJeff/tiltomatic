@@ -1,6 +1,6 @@
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor'
 
-export default function save( attributes ) {
+export default function save( { attributes } ) {
 
 	const {
 		tiltRangeX,
@@ -29,6 +29,5 @@ export default function save( attributes ) {
 		>
 			<InnerBlocks.Content />
 		</div>
-
 	)
 }

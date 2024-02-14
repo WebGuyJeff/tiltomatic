@@ -14,15 +14,17 @@
 	"attributes": {
 		"tiltRangeX": {
 			"type": "string",
-			"default": 50,
 			"source": "attribute",
-			"selector": "data-tilt-range-x"
+			"selector": ".tilt_container",
+			"attribute": "data-tilt-range-x",
+			"default": "50"
 		},
 		"tiltRangeY": {
 			"type": "string",
-			"default": 50,
 			"source": "attribute",
-			"selector": "data-tilt-range-y"
+			"selector": ".tilt_container",
+			"attribute": "data-tilt-range-y",
+			"default": "50"
 		},
 		"perspective": {
 			"type": "string",
@@ -40,7 +42,8 @@
 			"type": "string",
 			"default": "disabled",
 			"source": "attribute",
-			"selector": "data-overflow-mode"
+			"selector": ".tilt_container",
+			"attribute": "data-overflow-mode"
 		}
 	},
 	"providesContext": {

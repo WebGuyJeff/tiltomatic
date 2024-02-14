@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types'
 import { PanelBody, RangeControl, CheckboxControl, SelectControl } from '@wordpress/components'
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor'
 
+import { initialise } from './tilting-elements-group-view'
+
 export default function Edit( { attributes, setAttributes } ) {
 
 	const {
@@ -30,6 +32,9 @@ export default function Edit( { attributes, setAttributes } ) {
 		}
 	} )
 
+	// Setup new blocks on insersion.
+	initialise()
+
 	return (
 		<>
 
@@ -39,28 +44,25 @@ export default function Edit( { attributes, setAttributes } ) {
 					initialOpen={ true } 
 				>
 					<RangeControl
-						initialPosition={ 50 }
 						label={ __( 'X-axis range', 'tiltomatic' ) }
 						value={ parseInt( tiltRangeX ) }
-						onChange={ ( newValue ) => { setAttributes( { tiltRangeX: String( newValue ) } ) } }
+						onChange={ ( newValue ) => setAttributes( { tiltRangeX: String( newValue ) } ) }
 						max={ 90 }
 						min={ 0 }
 						help={ __( 'Set the X-axis rotational range in degrees.', 'tiltomatic' ) }
 					/>
 					<RangeControl
-						initialPosition={ 50 }
 						label={ __( 'Y-axis range', 'tiltomatic' ) }
 						value={ parseInt( tiltRangeY ) }
-						onChange={ ( newValue ) => { setAttributes( { tiltRangeY: String( newValue ) } ) } }
+						onChange={ ( newValue ) => setAttributes( { tiltRangeY: String( newValue ) } ) }
 						max={ 90 }
 						min={ 0 }
 						help={ __( 'Set the Y-axis rotational range in degrees.', 'tiltomatic' ) }
 					/>
 					<RangeControl
-						initialPosition={ 200 }
 						label={ __( '3D perspective distance', 'tiltomatic' ) }
 						value={ parseInt( perspective ) }
-						onChange={ ( newValue ) => { setAttributes( { perspective: newValue + 'px', } ) } }
+						onChange={ ( newValue ) => setAttributes( { perspective: newValue + 'px', } ) }
 						max={ 1000 }
 						min={ 0 }
 						help={ __( 'Distance to the perspective vanishing point in pixels. Smaller values result in more noticeable perspective and movement.', 'tiltomatic' ) }
@@ -68,13 +70,13 @@ export default function Edit( { attributes, setAttributes } ) {
 					<CheckboxControl
 						label={ __( 'Isolated perspective', 'tiltomatic' ) }
 						checked={ isolatedPerspective }
-						onChange={ ( newValue ) => { setAttributes( { isolatedPerspective: newValue } ) } }
+						onChange={ ( newValue ) => setAttributes( { isolatedPerspective: newValue } ) }
 						help={ __( 'Wrap tilt elements in individual perspective containers.', 'tiltomatic' ) }
 					/>
 					<CheckboxControl
 						label={ __( 'Animation enabled', 'tiltomatic' ) }
 						checked={ enabled }
-						onChange={ ( newValue ) => { setAttributes( { enabled: newValue } ) } }
+						onChange={ ( newValue ) => setAttributes( { enabled: newValue } ) }
 						help={ __( 'Disable/enable the animation.', 'tiltomatic' ) }
 					/>
 					<SelectControl

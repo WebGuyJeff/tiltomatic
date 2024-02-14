@@ -71,12 +71,19 @@ const isInViewport = ( element ) => {
  */
 const getRotationTimeline = async ( event, children ) => {
 	const container  = event.target.closest( containerSelector )
+
+	// Get range settings from HTML attrs.
 	const tiltRangeX = container.getAttribute( HTMLAttrRangeX )
 	const tiltRangeY = container.getAttribute( HTMLAttrRangeY )
-	const x          = event.clientX - container.getBoundingClientRect().left
-	const y          = event.clientY - container.getBoundingClientRect().top
+
+	// Get cursor position relative to container.
+	const x = event.clientX - container.getBoundingClientRect().left
+	const y = event.clientY - container.getBoundingClientRect().top
+
+	// Build a GSAP timeline to animate to new child transforms.
 	const tl         = gsap.timeline()
 	children.forEach( ( child ) => {
+
 		// Only add child to timeline if it's in view.
 		if ( isInViewport( child ) ) {
 			const fractionX = ( x - child._tilt.originX ) / container.offsetWidth
@@ -84,8 +91,6 @@ const getRotationTimeline = async ( event, children ) => {
 			const rotX      = ( fractionY * -tiltRangeY ).toFixed( 2 ) // Apply Y-angle to CSS X-axis.
 			const rotY      = ( fractionX * tiltRangeX ).toFixed( 2 ) // Apply X-angle to CSS Y-axis.
 			tl.to( child, { rotateX: rotX, rotateY: rotY, duration: 0.2 }, 0 )
-
-			console.log( 'tiltRangeX', tiltRangeX )
 		}
 	} )
 	return tl
@@ -100,6 +105,10 @@ const updateOnMouseOver = async ( event, children ) => {
 	timeline.play()
 }
 
+
+/**
+ * Setup all child elements ready for animation.
+ */
 const setupChildren = async () => {
 	const containers = []
 	document.querySelectorAll( childSelector ).forEach( ( child ) => {
@@ -117,9 +126,8 @@ const setupChildren = async () => {
 		// Add container to array.
 		containers.push( container )
 
-		// Store origin values in child prop.
+		// Store x and y positions (origin) of child in relation to container in a child prop.
 		child._tilt = {
-			// Calc origins in relation to doc.
 			container: container,
 			originX: 0,
 			originY: 0,
@@ -138,36 +146,70 @@ const setupChildren = async () => {
 	return uniqueContainers
 }
 
+
+/**
+ * Setup all container elements ready for animation.
+ */
 const setupContainers = ( containers ) => {
-	containers.forEach( ( container ) => { // Handle multiple in-page containers.
-		const onMouseMoveHandler  = ( event ) => throttle( updateOnMouseOver, 22, [ event, container._tiltChildren ] ) // 30 calls a sec @22 in tests.
+	containers.forEach( ( container ) => {
+
+		// Throttle function produces approx 30 calls a sec @ '22' in tests.
+		const onMouseMoveHandler  = ( event ) => throttle( updateOnMouseOver, 22, [ event, container._tiltChildren ] )
 		const onMouseLeaveHandler = () => gsap.to( container._tiltChildren, { rotateX: 0, rotateY: 0, duration: 0.5, delay: 0.2 } )
 		container.addEventListener( 'mousemove', onMouseMoveHandler )
 		container.addEventListener( 'mouseleave', onMouseLeaveHandler )
 	} )
 }
 
+
+/**
+ * Update x/y origins of all child elements.
+ */
 const setOrigins = () => document.querySelectorAll( childSelector ).forEach( ( child ) => child._tilt.setOrigin( child ) )
 
 
 /**
  * Initialise.
  */
-const init = async () => {
-	// Bail if there's nothing to animate.
-	if ( ! document.querySelector( childSelector ) ) return
+const initialise = async () => {
+
+	// Bail if there's no tilt children
+	const testChildren = document.querySelectorAll( childSelector )
+	if ( testChildren.length === 0 ) return
+
+
+
+// TESTING FOR NEWLY INSERTED BLOCK SETUP.
+
+	// ...Or if they've already been setup.
+	let noNewBlocks = true
+	testChildren.forEach( ( child ) => noNewBlocks = ( child?._tilt ) ? noNewBlocks : false )
+	if ( noNewBlocks ) return
+
+console.log( 'fired' )
+
+// TESTING END.
+
+
+
+	// Setup children and containers for animation.
 	const containers = await setupChildren()
 	setupContainers( containers )
+
+	// If window is resized, child origins may have changed so we update them.
 	window.onresize = () => debounce( setOrigins, 50 )
 }
 
 
-/**
- * Fire init on load.
- */
-const waitForDocReady = setInterval( () => {
+
+
+const fireOnDocReady = setInterval( async () => {
 	if ( document.readyState === 'complete' ) {
-		clearInterval( waitForDocReady )
-		init()
+		clearInterval( fireOnDocReady )
+		initialise()
 	}
 }, 100 )
+
+
+
+export { initialise }
