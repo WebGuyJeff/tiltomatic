@@ -12,8 +12,8 @@
 	"editorScript": "file:./tilting-element.js",
 	"ancestor": [ "tiltomatic/tilting-elements-group" ],
 	"usesContext": [
-		"tiltomatic/max-angle-x",
-		"tiltomatic/max-angle-y",
+		"tiltomatic/tilt-range-x",
+		"tiltomatic/tilt-range-y",
 		"tiltomatic/perspective",
 		"tiltomatic/enabled"
 	],

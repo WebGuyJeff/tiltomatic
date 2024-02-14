@@ -44,8 +44,8 @@
 		}
 	},
 	"providesContext": {
-		"tiltomatic/max-angle-x": "tiltRangeX",
-		"tiltomatic/max-angle-y": "tiltRangeY",
+		"tiltomatic/tilt-range-x": "tiltRangeX",
+		"tiltomatic/tilt-range-y": "tiltRangeY",
 		"tiltomatic/perspective": "perspective",
 		"tiltomatic/enabled": "enabled"
 	},

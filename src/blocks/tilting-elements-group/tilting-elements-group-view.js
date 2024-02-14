@@ -84,6 +84,8 @@ const getRotationTimeline = async ( event, children ) => {
 			const rotX      = ( fractionY * -tiltRangeY ).toFixed( 2 ) // Apply Y-angle to CSS X-axis.
 			const rotY      = ( fractionX * tiltRangeX ).toFixed( 2 ) // Apply X-angle to CSS Y-axis.
 			tl.to( child, { rotateX: rotX, rotateY: rotY, duration: 0.2 }, 0 )
+
+			console.log( 'tiltRangeX', tiltRangeX )
 		}
 	} )
 	return tl
@@ -149,12 +151,23 @@ const setOrigins = () => document.querySelectorAll( childSelector ).forEach( ( c
 
 
 /**
- * Initialise on window load.
+ * Initialise.
  */
-window.onload = async () => {
+const init = async () => {
 	// Bail if there's nothing to animate.
 	if ( ! document.querySelector( childSelector ) ) return
 	const containers = await setupChildren()
 	setupContainers( containers )
 	window.onresize = () => debounce( setOrigins, 50 )
 }
+
+
+/**
+ * Fire init on load.
+ */
+const waitForDocReady = setInterval( () => {
+	if ( document.readyState === 'complete' ) {
+		clearInterval( waitForDocReady )
+		init()
+	}
+}, 100 )
