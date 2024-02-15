@@ -35,22 +35,27 @@
 			"default": false
 		},
 		"enabled": {
-			"type": "boolean",
-			"default": true
+			"type": "string",
+			"source": "attribute",
+			"selector": ".tilt_container",
+			"attribute": "data-tilt-enabled",
+			"default": "true"
 		},
 		"overflowMode": {
 			"type": "string",
-			"default": "disabled",
+			"default": "container",
+			"enum": [ "container", "custom", "disabled" ]
+		},
+		"overflowSelector": {
+			"type": "string",
 			"source": "attribute",
 			"selector": ".tilt_container",
-			"attribute": "data-overflow-mode"
+			"attribute": "data-overflow-selector"
 		}
 	},
 	"providesContext": {
-		"tiltomatic/tilt-range-x": "tiltRangeX",
-		"tiltomatic/tilt-range-y": "tiltRangeY",
 		"tiltomatic/perspective": "perspective",
-		"tiltomatic/enabled": "enabled"
+		"tiltomatic/isolated-perspective": "isolatedPerspective"
 	},
 	"supports": {
 		"html": false,

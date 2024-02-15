@@ -12,15 +12,22 @@
 	"editorScript": "file:./tilting-element.js",
 	"ancestor": [ "tiltomatic/tilting-elements-group" ],
 	"usesContext": [
-		"tiltomatic/tilt-range-x",
-		"tiltomatic/tilt-range-y",
 		"tiltomatic/perspective",
-		"tiltomatic/enabled"
+		"tiltomatic/isolated-perspective"
 	],
 	"supports": {
 		"html": false,
 		"layout": {
 			"allowInheriting": true
+		}
+	},
+	"attributes": {
+		"perspective": {
+			"type": "string"
+		},
+		"isolatedPerspective": {
+			"type": "boolean",
+			"default": false
 		}
 	}
 }

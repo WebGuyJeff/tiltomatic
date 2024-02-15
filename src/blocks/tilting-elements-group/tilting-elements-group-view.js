@@ -15,7 +15,9 @@ gsap.ticker.fps( 30 ) // Limit updates for smoother animation.
 const containerSelector = '.tilt_container',
 	  childSelector     = '.tilt',
 	  HTMLAttrRangeX    = 'data-tilt-range-x',
-	  HTMLAttrRangeY    = 'data-tilt-range-y'
+	  HTMLAttrRangeY    = 'data-tilt-range-y',
+	  HTMLAttrOverflow  = 'data-overflow-selector',
+	  HTMLAttrEnabled   = 'data-tilt-enabled'
 
 
 /**
@@ -67,7 +69,7 @@ const isInViewport = ( element ) => {
 
 
 /**
- * Get a timeline with new rotation of children.
+ * Get a GSAP timeline to animate to new child transforms.
  */
 const getRotationTimeline = async ( event, children ) => {
 	const container  = event.target.closest( containerSelector )
@@ -80,7 +82,7 @@ const getRotationTimeline = async ( event, children ) => {
 	const x = event.clientX - container.getBoundingClientRect().left
 	const y = event.clientY - container.getBoundingClientRect().top
 
-	// Build a GSAP timeline to animate to new child transforms.
+	// Build timeline.
 	const tl         = gsap.timeline()
 	children.forEach( ( child ) => {
 
@@ -113,9 +115,10 @@ const setupChildren = async () => {
 	const containers = []
 	document.querySelectorAll( childSelector ).forEach( ( child ) => {
 
-		// Bail if the child has no ancestor container as we don't want to animate it.
+		// Bail if the child has no ancestor container or container has enabled attr set to false.
 		const container = child.closest( containerSelector )
-		if ( ! container ) return
+		const enabled   = container.getAttribute( HTMLAttrEnabled )
+		if ( ! container || enabled === 'false' ) return
 		
 		// Add child to container prop.
 		if ( ! container._tiltChildren ) {
@@ -158,6 +161,12 @@ const setupContainers = ( containers ) => {
 		const onMouseLeaveHandler = () => gsap.to( container._tiltChildren, { rotateX: 0, rotateY: 0, duration: 0.5, delay: 0.2 } )
 		container.addEventListener( 'mousemove', onMouseMoveHandler )
 		container.addEventListener( 'mouseleave', onMouseLeaveHandler )
+
+		// Apply overflow styles if necessary.
+		const overflowSelector = container.getAttribute( HTMLAttrOverflow )
+		if ( overflowSelector && overflowSelector !== 'disabled' ) {
+			container.closest( overflowSelector ).style.overflow = 'hidden'
+		}
 	} )
 }
 
@@ -189,7 +198,6 @@ const initialise = async () => {
 console.log( 'fired' )
 
 // TESTING END.
-
 
 
 	// Setup children and containers for animation.

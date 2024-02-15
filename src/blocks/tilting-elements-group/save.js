@@ -8,24 +8,27 @@ export default function save( { attributes } ) {
 		perspective,
 		isolatedPerspective,
 		enabled,
-		overflowMode
+		overflowSelector
 	} = attributes
 
 	const containerClassName = 'tilt_container'
 
+	const overflowSelectorConditionalProp = overflowSelector ? { 'data-overflow-selector': overflowSelector } : {}
+
+	const perspectiveConditionalStyle = isolatedPerspective ? {} : { style: { perspective: perspective } }
+
 	const blockProps = useBlockProps.save( {
 		className: containerClassName,
-		style: {
-			perspective: perspective
-		}
+		...perspectiveConditionalStyle
 	} )
 
 	return (
 		<div
 			{ ...blockProps }
+			{ ...overflowSelectorConditionalProp }
 			data-tilt-range-x={ tiltRangeX }
 			data-tilt-range-y={ tiltRangeY }
-			data-overflow-mode={ overflowMode }
+			data-tilt-enabled={ enabled }
 		>
 			<InnerBlocks.Content />
 		</div>
