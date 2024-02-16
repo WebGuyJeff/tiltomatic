@@ -182,23 +182,19 @@ const setOrigins = () => document.querySelectorAll( childSelector ).forEach( ( c
  */
 const initialise = async () => {
 
+	// DEBUG.
+	console.log( 'viewScript fired' )
+
+
+
 	// Bail if there's no tilt children
 	const testChildren = document.querySelectorAll( childSelector )
 	if ( testChildren.length === 0 ) return
 
-
-
-// TESTING FOR NEWLY INSERTED BLOCK SETUP.
-
 	// ...Or if they've already been setup.
-	let noNewBlocks = true
-	testChildren.forEach( ( child ) => noNewBlocks = ( child?._tilt ) ? noNewBlocks : false )
-	if ( noNewBlocks ) return
-
-console.log( 'fired' )
-
-// TESTING END.
-
+	let childrenNeedSetup = false
+	testChildren.forEach( ( child ) => childrenNeedSetup = ( child?._tilt ) ? childrenNeedSetup : true )
+	if ( ! childrenNeedSetup ) return
 
 	// Setup children and containers for animation.
 	const containers = await setupChildren()

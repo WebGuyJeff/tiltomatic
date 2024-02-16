@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n'
 import { PropTypes } from 'prop-types'
 import { PanelBody, RangeControl, CheckboxControl, SelectControl, TextControl } from '@wordpress/components'
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor'
+import { useEffect } from "@wordpress/element"
 
 import { initialise } from './tilting-elements-group-view'
 
@@ -47,10 +48,22 @@ export default function Edit( { attributes, setAttributes } ) {
 		...perspectiveConditionalStyle
 	} )
 
-	/*
-	 * Setup new blocks on insersion.
-	 * initialise()
-	 */
+	// Setup new blocks on insersion.
+
+	// Possible solution to detecting block insertions: https://wordpress.stackexchange.com/questions/357267/get-used-blocks-in-post-and-detect-changing
+	
+	initialise()
+
+
+	console.log( 'RENDER' )
+
+
+
+
+
+	
+
+
 
 	return (
 		<>
@@ -60,6 +73,12 @@ export default function Edit( { attributes, setAttributes } ) {
 					title={ __( 'Settings' ) }
 					initialOpen={ true } 
 				>
+					<CheckboxControl
+						label={ __( 'Animation enabled', 'tiltomatic' ) }
+						checked={ enabled === 'true' || false }
+						onChange={ ( newValue ) => setAttributes( { enabled: ( newValue ? 'true' : 'false' ) } ) }
+						help={ __( 'Disable/enable the animation.', 'tiltomatic' ) }
+					/>
 					<RangeControl
 						label={ __( 'X-axis range', 'tiltomatic' ) }
 						value={ parseInt( tiltRangeX ) }
@@ -89,12 +108,6 @@ export default function Edit( { attributes, setAttributes } ) {
 						checked={ isolatedPerspective }
 						onChange={ ( newValue ) => setAttributes( { isolatedPerspective: newValue } ) }
 						help={ __( 'Wrap tilt elements in individual perspective containers.', 'tiltomatic' ) }
-					/>
-					<CheckboxControl
-						label={ __( 'Animation enabled', 'tiltomatic' ) }
-						checked={ enabled === 'true' || false }
-						onChange={ ( newValue ) => setAttributes( { enabled: ( newValue ? 'true' : 'false' ) } ) }
-						help={ __( 'Disable/enable the animation.', 'tiltomatic' ) }
 					/>
 					<SelectControl
 						label={ __( 'Hide overflow mode', 'tiltomatic' ) }

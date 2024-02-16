@@ -10,7 +10,7 @@
 	"keywords": [ "tiltomatic", "tilting", "animation", "group" ],
 	"textdomain": "tiltomatic",
 	"editorScript": "file:./tilting-elements-group.js",
-	"script": "file:./tilting-elements-group-view.js",
+	"viewScript": "file:./tilting-elements-group-view.js",
 	"attributes": {
 		"tiltRangeX": {
 			"type": "string",
